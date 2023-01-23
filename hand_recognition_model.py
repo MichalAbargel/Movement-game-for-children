@@ -30,7 +30,7 @@ def deditiction_hands(image, order,time_start,game_over):
             # Display 'Both Hands' on the image
             cv2.putText(image, 'Both Hands - well done!!', (250, 50),
                         cv2.FONT_HERSHEY_COMPLEX,
-                        0.9, (51, 255, 255), 2)
+                        0.9, (201, 174, 104), 2)
             print("both")
             win = 'win'
             return image, win,game_over
@@ -49,7 +49,7 @@ def deditiction_hands(image, order,time_start,game_over):
                     cv2.putText(image, label + ' Hand - well done!!',
                                 (20, 50),
                                 cv2.FONT_HERSHEY_COMPLEX,
-                                0.9, (51, 255, 255), 2)
+                                0.9, (201, 174, 104), 2)
                     win = 'win'
                     return image, win, game_over
                 elif label == 'Right' and order == 0:
@@ -57,7 +57,7 @@ def deditiction_hands(image, order,time_start,game_over):
                     # on left side of window
                     cv2.putText(image, label + ' Hand - well done!!', (250, 50),
                                 cv2.FONT_HERSHEY_COMPLEX,
-                                0.9, (51, 255, 255), 2)
+                                0.9, (201, 174, 104), 2)
                     win = 'win'
                     return image, win,game_over
                 win = 'lose'

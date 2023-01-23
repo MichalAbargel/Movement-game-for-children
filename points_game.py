@@ -8,7 +8,7 @@ from tkinter import *
 from PIL import ImageTk, Image
 from cvzone.HandTrackingModule import HandDetector
 import cvzone
-
+from music_player import play_click
 # webcome
 # cap = cv2.VideoCapture(0)
 #cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1699990)
@@ -26,18 +26,11 @@ def analyze_points_frame(image,counter, score,cx, cy,time_start,game_over):
     y = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
     coff = np.polyfit(x, y, 2)
 
-    #cx, cy = 250, 250
-    color = (225, 0, 225)
-    #counter = 0
-    #score = 0
-    #time_start = time.time()
+    color = (170, 213, 34)
     total_time = 10
-    #game_over = False
 
     # Flip the image(frame)
     img = cv2.flip(image, 1)
-    # Convert BGR image to RGB image
-    # img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
     hands = detector.findHands(img, draw=False)
     if time.time() - time_start < total_time:
@@ -56,32 +49,28 @@ def analyze_points_frame(image,counter, score,cx, cy,time_start,game_over):
             if distance_CM < 80:
                 if x < cx < x+w and y < cy < y+h:
                     counter = counter + 1
-                    color = (0, 255, 0)
-            cv2.rectangle(img,(x, y), (x+w, y+h), (255, 0, 255), 3)
-            cvzone.putTextRect(img, f'{int(distance_CM)} cm', (x+5, y-10))
-        #if counter:
-
-            #counter += 1
-
+                    color = (224, 22, 233)
+                    play_click()
+            cv2.rectangle(img,(x, y), (x+w, y+h), (201, 174, 104), 3)
+            cvzone.putTextRect(img, f'{int(distance_CM)} cm', (x+5, y-10),  colorR=(201, 174, 104))
             if counter == 10:
                 # 590 350
                 cx = random.randint(10, 590)
                 cy = random.randint(10, 350)
-                color = (255, 0, 255)
+                color = (201, 174, 104)
                 score += 1
                 counter = 0
 
         # Draw Button
-        cv2.circle(img,(cx, cy),30 ,color, cv2.FILLED)
+        cv2.circle(img,(cx, cy),30, color, cv2.FILLED)
         cv2.circle(img, (cx, cy), 10, (225, 225, 225), cv2.FILLED)
         cv2.circle(img, (cx, cy), 10, (225, 225, 225), 2)
         cv2.circle(img, (cx, cy), 30, (50,50, 50), 2)
         # Game HUD
-        cvzone.putTextRect(img, f'Time: {int(total_time-(time.time()-time_start))}', (60, 120),scale=2, offset=10)
-        cvzone.putTextRect(img, f'Score: {str(score).zfill(2)}', (60, 75), scale=2, offset=10)
+        cvzone.putTextRect(img, f'Time: {int(total_time-(time.time()-time_start))}', (60, 120),scale=2, colorR=(201, 174, 104), offset=10)
+        cvzone.putTextRect(img, f'Score: {str(score).zfill(2)}', (60, 75), scale=2, colorR=(201, 174, 104), offset=10)
     else:
         game_over = True
-        cvzone.putTextRect(img, 'GAME OVER !!!', (50, 140), scale=5, offset=8, thickness=7)
-        cvzone.putTextRect(img, f'Your Score: {score}', (70, 200), scale=3, offset=2, thickness=5)
-        #cvzone.putTextRect(img, 'Press R to restart', (49, 57), scale=2, offset=10)
+        cvzone.putTextRect(img, 'GAME OVER', (50, 140), colorT=(104, 174, 201), scale=5, offset=8, thickness=7)
+        cvzone.putTextRect(img, f'Your Score: {score}', (70, 200), colorT=(104, 174, 201), scale=3, offset=2, thickness=5)
     return img, game_over, score, counter

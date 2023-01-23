@@ -11,7 +11,6 @@ from music_player import play_well_done, play_try_again, is_busy
 from hand_recognition_model import deditiction_hands
 from numbers_game import numbers
 
-
 # define global frame counter
 hands_counter_frames = 0
 numbers_counter_frames = 0
@@ -25,7 +24,7 @@ app = None
 vid = cv2.VideoCapture(0)
 
 # Set the width and height
-vid.set(cv2.CAP_PROP_FRAME_WIDTH, 590)
+vid.set(cv2.CAP_PROP_FRAME_WIDTH, 700)
 vid.set(cv2.CAP_PROP_FRAME_HEIGHT, 350)
 
 
@@ -67,9 +66,9 @@ def show_stream_numbers(counter, finger, time_start, score):
     configur_image_camera(image)
     if time.time() - time_start >= total_time:
         game_over = True
-        cvzone.putTextRect(img, 'GAME OVER !!!', (50, 140), scale=5, offset=8, thickness=7)
+        cvzone.putTextRect(img, 'GAME OVER', (50, 140), scale=5, offset=8, thickness=7)
         cvzone.putTextRect(image, f'Your Score: {score}', (70, 200), scale=3, offset=2, thickness=5)
-        user_order.configure(text=f'GAME OVER !!!\n  Your Score: {score}')
+        user_order.configure(text=f'GAME OVER! Your Score: {score}')
 
         return
     camera.after(2, lambda: show_stream_numbers(counter, finger, time_start, score))
@@ -84,7 +83,7 @@ def show_stream_hands(is_playing, counter_win, counter_lose, random_order, time_
     _, frame = vid.read()
     image, win, game_over_ = deditiction_hands(frame, order, time_start, game_over)
     if game_over_:
-        user_order.configure(text=f'GAME OVER !!!\nYour Score: {score}')
+        user_order.configure(text=f'GAME OVER! Your Score: {score}')
         return
     print(win)
     if win == 'win':
@@ -125,7 +124,7 @@ def show_stream_points(is_playing, counter, score, cx, cy,time_start,game_over):
         if game_over:
             if score_ != 0:
                 play_well_done()
-                user_order.configure(text='well done!!')
+                user_order.configure(text=f'GAME OVER! Your Score: {score}')
                 is_playing = True
             else:
                 play_try_again()
@@ -186,10 +185,6 @@ def close_app():
     app.destroy()
 
 
-def change_appearance_mode_event(new_appearance_mode):
-    customtkinter.set_appearance_mode(new_appearance_mode)
-
-
 def set_games_window(master):
     global camera_frame
     global camera
@@ -221,7 +216,7 @@ def set_games_window(master):
     menu_frame.place(x=50, y=450)
 
     # user_output
-    user_order = customtkinter.CTkLabel(master=menu_frame, font=("calibri", 30), text="Hello! let's play",
+    user_order = customtkinter.CTkLabel(master=menu_frame, font=("calibri", 35), text="Hello! let's play",
                                         text_color=('#008B8B', 'white'), width=200)
     user_order.place(anchor='center', relx=0.5, rely=0.2)
 
@@ -230,6 +225,7 @@ def set_games_window(master):
         master=menu_frame,
         command=hands_control,
         text="Hands",
+        font=("calibri", 20),
         text_color="#68aec9",
         hover=True,
         hover_color="#A8E6FE",
@@ -246,6 +242,7 @@ def set_games_window(master):
         command=numbers_control,
         text="Numbers",
         text_color="#68aec9",
+        font=("calibri", 20),
         hover=True,
         hover_color="#A8E6FE",
         height=50,
@@ -261,6 +258,7 @@ def set_games_window(master):
         command=points_control,
         text="Points",
         text_color="#68aec9",
+        font=("calibri", 20),
         hover=True,
         hover_color="#A8E6FE",
         height=50,
@@ -275,6 +273,7 @@ def set_games_window(master):
         master=menu_frame,
         command=close_app,
         text="Good By",
+        font=("calibri", 24),
         text_color="#FFFFFF",
         hover=True,
         hover_color="#A8E6FE",
