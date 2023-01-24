@@ -16,7 +16,7 @@ app.geometry('800x780')
 app.bind('<Escape>', lambda e: app.quit())
 # Declare the width and height in variables
 WIDTH, HEIGHT = 800, 780
-image=ImageTk.PhotoImage(Image.open("main-imag-1.jpg"))
+image=ImageTk.PhotoImage(Image.open("media/main-imag-1.jpg"))
 background_label= Label(app, image=image)
 background_label.place(x=0, y=0, relwidth=1, relheight=1)
 

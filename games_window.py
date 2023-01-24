@@ -201,7 +201,7 @@ def set_games_window(master):
     image_frame = customtkinter.CTkFrame(background_frame, width=700, height=350)
     image_frame.place()
     image_frame.pack()
-    img = ImageTk.PhotoImage(Image.open("main-image-2.jpg"))
+    img = ImageTk.PhotoImage(Image.open("media/main-image-2.jpg"))
     # Create a Label Widget to display the text or Image
     background_label = Label(image_frame, image=img)
     background_label.place(anchor='center', relx=0.5, rely=0.2)
